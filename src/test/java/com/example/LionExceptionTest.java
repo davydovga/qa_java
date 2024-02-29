@@ -6,22 +6,24 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionExceptionTest {
 
 
     @Mock
-    Feline feline;
+    Lion lion;
 
     @Test
     public void checkExceptionText(){
-        try {
-            new Lion("Clown",feline);
-        } catch (Exception exception){
-            assertEquals("Текст ошибки не совпадает","Используйте допустимые значения пола животного - самец или самка",exception.getMessage());
-        }
+        Exception exception = assertThrows(Exception.class, ()-> new Lion("asdadsa"));
+        String expectedMessage = "Используйте допустимые значения пола животного - самей или самка";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+
     }
 
 }
