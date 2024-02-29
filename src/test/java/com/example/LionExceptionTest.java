@@ -12,8 +12,6 @@ import static org.junit.Assert.*;
 public class LionExceptionTest {
 
 
-    @Mock
-    Lion lion;
 
     @Test
     public void checkExceptionText(){
