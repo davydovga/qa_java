@@ -1,43 +1,35 @@
 package com.example;
 
-
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionTest {
-    //Создаем болванку кошатки чтобы изолировать тест котят от класса Feline
-    @Mock
-    Feline feline;
+    private final Feline feline = mock(Feline.class);
+    private final Lion lion;
 
-
-    @Test
-    public void getKittensTest() {
-        //Задаем условие для изолирования Lion от Feline
-        Mockito.when(feline.getKittens()).thenReturn(1);
-        //Вызываем метод для сверки
-        int kittens = feline.getKittens();
-        int expectedKittens = 1;
-        assertEquals("Ожидается 1 котенок", kittens, expectedKittens);
+    public LionTest() throws Exception {
+        this.lion = new Lion("Самец", feline);
     }
 
-
     @Test
-    public void getFoodTest() throws Exception {
-        //Изолируем getFoodTest от ошибок в методе feline.getFood
+    public void checkGetKittens() {
+        Mockito.when(feline.getKittens()).thenReturn(1);
+        assertEquals("Должен быть только один котенок", 1, lion.getKittens());
+    }
+    @Test
+    public void checkGetFood() throws Exception {
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.getFood("Хищник")).thenReturn(expectedFood);
-        assertEquals(expectedFood, feline.getFood("Хищник"));
-
-
+        assertEquals("Кошачьи едят: Животные, Птицы, Рыба",
+                expectedFood,
+                lion.getFood());
     }
 }
